@@ -9,6 +9,7 @@ import {
   Divider,
   CircularProgress,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const RegistrationFormComponent: FC = () => {
 
@@ -88,10 +89,59 @@ const RegistrationFormComponent: FC = () => {
             placeholder='Minimum 6 characters required'
           />
 
-          <Button type='submit'>Register</Button>
+          <Button 
+            variant='contained'
+            style={{
+              marginTop: '16px',
+              height: '31px',
+              backgroundColor: '#f0c14b',
+              color: 'black',
+              borderColor: '#a88734 #9c7e31 #846a29',
+              textTransform: 'none',
+            }}
+            type='submit'>Register</Button>
 
         </Grid2>
       </form>
+
+      <div style={{ marginTop: '30px' }}>
+        <small>
+          <span>By creating an account, you agree to Amazon's</span>
+        </small>
+      </div>
+
+      <div>
+        <small>
+          <a href='#' style={{textDecoration: 'none'}}>
+            {' '}
+            Conditions of use
+          </a>{' '}
+          and{' '}
+          <a href='#' style={{textDecoration: 'none'}}>{' '}
+            Privacy police
+          </a>
+        </small>
+      </div>
+
+      <Divider sx={{marginTop: '36px', marginBottom: '36px'}} />
+
+      <div>
+        <small>
+          Already have an account?{' '}
+          <Link to='/signin' style={{textDecoration: 'none', color: '#0000ee'}}>Sign-in</Link>
+        </small>
+      </div>
+
+      <div>
+        <small>
+          Buying for work?
+          <a href='#' style={{textDecoration: 'none'}}>
+            {' '}
+            Create a free business account
+          </a>{' '}
+        </small>
+      </div>
+
     </Box>
   )
 }
