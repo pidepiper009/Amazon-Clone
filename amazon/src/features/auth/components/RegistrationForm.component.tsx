@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import useInput from '../../../hooks/input/use-inputs';
 import { validateNameLength, validatePasswordLength } from '../../../shared/utils/validation/length';
 import { validateEmail } from '../../../shared/utils/validation/email';
+import { NewUser } from '../models/NewUser';
 
 const RegistrationFormComponent: FC = () => {
 
@@ -48,10 +49,33 @@ const RegistrationFormComponent: FC = () => {
     clearHandler: confirmPasswordClearHandler,
   } = useInput(validatePasswordLength)
 
+  const clearForm = () => {
+    nameClearHandler();
+    emailClearHandler();
+    passwordClearHandler();
+    confirmPasswordClearHandler();
+  }
+
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('Clicked');
+    if (password !== confirmPassword) return;
+
+    if (nameHasError || emailHasError || passwordHasError || confirmPasswordHasError) return;
+
+    if (name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      confirmPassword.length === 0
+    ) return;
+
+    const newUser: NewUser = {
+      name, email, password
+    }
+
+    console.log('NEW USER: ', newUser);
+
+    clearForm();
   }
 
   return (
