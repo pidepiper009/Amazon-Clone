@@ -10,13 +10,43 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import useInput from '../../../hooks/input/use-inputs';
+import { validateEmail } from '../../../shared/utils/validation/email';
+import { validatePasswordLength } from '../../../shared/utils/validation/length';
 
 const SigninFormComponent: FC = () => {
+
+  const {
+    text: email,
+    shouldDisplayError: emailHasError,
+    textChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    clearHandler: emailClearHandler,
+  } = useInput(validateEmail)
+
+  const {
+    text: password,
+    shouldDisplayError: passwordHasError,
+    textChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    clearHandler: passwordClearHandler,
+  } = useInput(validatePasswordLength)
+
+  const clearForm = () => {
+    emailClearHandler();
+    passwordClearHandler();
+  }
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('Clicked');
+    if (emailHasError || passwordHasError) return;
+
+    if (email.length === 0 ||password.length === 0) return;
+
+    console.log('USER: ', password, email);
+
+    clearForm();
   }
 
   return (
@@ -40,25 +70,37 @@ const SigninFormComponent: FC = () => {
             htmlFor='email'
           >Email</InputLabel>
 
-          <TextField
-            type='text'
-            name='email'
-            id='email'
-            variant='outlined'
-            size='small' />
+        <TextField 
+          value={email}
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          error={emailHasError}
+          helperText={emailHasError ? 'Enter your email' : ''}
+            type='email' 
+            name='email' 
+            id='email' 
+            variant='outlined' 
+            size='small' 
+          />
 
           <InputLabel
             sx={{ fontWeight: 500, marginTop: 1, color: '#000000' }}
             htmlFor='password'
           >Password</InputLabel>
 
-          <TextField
-            type='text'
-            name='password'
-            id='password'
-            variant='outlined'
-            size='small'
-            placeholder='Minimum 6 characters required' />
+          <TextField 
+          value={password}
+          onChange={passwordChangeHandler}
+          onBlur={passwordBlurHandler}
+          error={passwordHasError}
+          helperText={passwordHasError ? 'Minimum 6 characters required' : ''}
+            type='password' 
+            name='password' 
+            id='password' 
+            variant='outlined' 
+            size='small' 
+            placeholder='Minimum 6 characters required'
+          />
 
           <Button
             variant='contained'
