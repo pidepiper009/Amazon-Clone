@@ -25,6 +25,7 @@ const login = async (user: LoginUser): Promise<Jwt> => {
     localStorage.setItem('jwt', JSON.stringify(response.data));
 
     const decodedJwt: DecodedJwt = jwtDecode(response.data.token);
+    localStorage.setItem('user', JSON.stringify(decodedJwt.user))
 
   }
 

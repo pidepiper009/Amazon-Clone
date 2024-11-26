@@ -66,7 +66,7 @@ const RegistrationFormComponent: FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(reset())
+      dispatch(reset());
       clearForm();
       navigate('/signin');
     }
