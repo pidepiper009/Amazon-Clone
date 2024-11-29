@@ -109,14 +109,16 @@ export const authSlice = createSlice({
         console.log(12, action.payload);
         state.isLoading = false;
         state.isSuccess = true;
-        state.jwt = action.payload;
+        state.jwt = action.payload.jwt;
         state.isAuthenticated = true;
+        state.user = action.payload.user;
       })
       .addCase(login.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.isAuthenticated = false;
+        state.user = null;
       })
       // LOGOUT
       .addCase(logout.fulfilled, (state) => {
