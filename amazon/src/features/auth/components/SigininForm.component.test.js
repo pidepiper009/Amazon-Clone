@@ -1,3 +1,9 @@
+// Mocking axios
+jest.mock('axios', () => ({
+    get: jest.fn(),
+    post: jest.fn(),
+}));
+
 import { reducer, screen } from "../../../shared/utils/test-utils";
 
 import SigninFormComponent from "./SigninForm.component";
