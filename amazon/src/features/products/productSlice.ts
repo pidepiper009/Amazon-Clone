@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cart } from "./models/Cart";
 import { ProductDocument } from "./models/Product";
 import productService from "./services/product.services";
@@ -21,6 +21,41 @@ const initialState: ProductState = {
   isLoading: false,
   isSuccess: false,
   isError: false,
+};
+
+const modifyQtyByOne = (
+  cart: Cart, 
+  selectedProduct: ProductDocument, 
+  modificationType: 'INCREMENT' | 'DECREMENT'
+) => {
+  const previousCart = [...cart];
+
+  const productInCart = previousCart.find(
+    (product) => product._id === selectedProduct._id
+  );
+
+  let newCart = [];
+
+  if (!productInCart) {
+    previousCart.push({ ...selectedProduct, quantity: 1 });
+    newCart = previousCart;
+  } else {
+    const filteredCart = previousCart.filter(p => p._id
+    !== productInCart._id);
+
+    const modification = modificationType === 
+    'INCREMENT' ? 1 : -1;
+
+    productInCart.quantity = productInCart.quantity + modification;
+
+    if (productInCart.quantity === 0) {
+      newCart = [...filteredCart]
+    } else {
+      newCart = [...filteredCart, productInCart];
+    }
+  }
+
+  return newCart;
 }
 
 export const getProducts = createAsyncThunk('product', 
@@ -35,7 +70,20 @@ async () =>{
 export const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    incrementProduct: (state, action:
+    PayloadAction<ProductDocument>) => {
+      const modifiedCart = modifyQtyByOne(state.cart,
+      action.payload, 'INCREMENT');
+      state.cart = modifiedCart
+    },
+    decrementProduct: (state, action:
+      PayloadAction<ProductDocument>) => {
+        const modifiedCart = modifyQtyByOne(state.cart,
+        action.payload, 'DECREMENT');
+        state.cart = modifiedCart
+      },
+  },
   extraReducers: (builder) => {
     builder
     .addCase(getProducts.pending, (state) => {
@@ -52,6 +100,9 @@ export const productSlice = createSlice({
       state.products = []
     })
   }
-})
+});
+
+export const { incrementProduct, decrementProduct } = 
+productSlice.actions
 
 export default productSlice.reducer;
