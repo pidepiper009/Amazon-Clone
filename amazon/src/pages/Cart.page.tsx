@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderComponent from '../features/products/components/Header.component'
 import ProductComponent from '../features/products/components/Product.component';
 import { useAppSelector } from '../hooks/redux/hooks';
+import PaymentGateway from '../features/products/components/Payment.component';
 
 const CartPage = () => {
 
@@ -45,6 +46,7 @@ const CartPage = () => {
         </span>
       </div>
 
+        {totalQty > 0 && <PaymentGateway />}
       </div>
     </div>
   )
