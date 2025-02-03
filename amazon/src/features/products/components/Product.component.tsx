@@ -26,7 +26,7 @@ const ProductComponent: FC<ProductComponentProps> = ({product}) => {
   return (
     <Card sx={{width:300, minWidth: 300}}>
       <CardMedia  component='img' height='140' 
-      image="https://via.placeholder.com/300.png/09f/fff" alt="image" />
+      image="https://dummyimage.com/300/09f/ffffff" alt="image" />
       <CardContent>
         <Typography gutterBottom variant="h5" component='div'>
           $ {product.price}
