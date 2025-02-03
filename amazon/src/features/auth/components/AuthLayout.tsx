@@ -10,7 +10,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
       direction='column' 
       justifyContent='flex-start' 
       alignItems='center'>
-      <img src='amazon-logo.png' alt='amazon-logo' height='40px' />
+      <img src='amazon-icon.webp' alt='amazon-logo' height='100px' />
       <main>{children}</main>
     </Grid2>
   )
