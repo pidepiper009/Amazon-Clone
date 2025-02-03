@@ -1,10 +1,10 @@
-export interface Product {
+interface CartItem {
   name: string;
   price: number;
+  quantity: number;
   description?: string;
-}
-
-export interface ProductDocument extends Product {
   _id: string;
   __v: number;
 }
+
+export type Cart = CartItem[];
